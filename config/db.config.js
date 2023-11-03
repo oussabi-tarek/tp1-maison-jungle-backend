@@ -1,8 +1,3 @@
 module.exports={
-  HOST:"localhost",
-  USER:"root",
-  PASSWORD:"",
-  DB:"plantes",
-  dialect:"mysql",
-  table:"plant"
+  URI: "mongodb://127.0.0.1:27017/plants",
 }

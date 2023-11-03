@@ -1,35 +1,19 @@
-const dbConfig= require("../config/db.config");
-const Sequelize = require("sequelize");
+const mongoose=require('mongoose');
 
-const sequelize =new  Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-   host: dbConfig.HOST,
-   dialect: dbConfig.dialect,
-   define:{
-         timestamps:false,
-         freezeTableName:true
-   }
-})
+const plantSchema=new mongoose.Schema({
+    name:String,
+    category:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Category'
+    },
+    light:Number,
+    water:Number,
+    price:Number,
+    cover:Buffer
+});
 
-const Plant = sequelize.define('plant', {
-    name: {
-        type: Sequelize.STRING
-    },
-     category:{
-        type: Sequelize.STRING
-    },
-    light:{
-        type: Sequelize.INTEGER
-    },
-    water:{
-        type: Sequelize.INTEGER
-    },
-    price:{
-        type: Sequelize.FLOAT
-    },
-    cover:{
-        type:Sequelize.BLOB
-    }
-})
+
+const Plant=mongoose.model('Plant',plantSchema,'plant');
 
 module.exports=Plant;
 

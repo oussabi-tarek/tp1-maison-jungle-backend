@@ -1,18 +1,11 @@
-const mysql = require('mysql');
-const dbConfig = require('../config/db.config.js');
+const mongoose=require('mongoose');
+const dbConfig=require('../config/db.config');
+mongoose.Promise=global.Promise;
 
-// Create a connection to the database
-const connection = mysql.createConnection({
-    host: dbConfig.HOST,
-    user: dbConfig.USER,
-    password: dbConfig.PASSWORD,
-    database: dbConfig.DB
-});
+const db={};
+db.mongoose=mongoose;
+db.url=dbConfig.URI;
 
-// Open the MySQL connection
-connection.connect(error => {
-    if (error) throw error;
-    console.log("Successfully connected to the database.");
-});
 
-module.exports = connection;
+
+module.exports=db;
