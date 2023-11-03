@@ -17,5 +17,13 @@ exports.createCommand=async (req,res)=>{
     }catch(err){
         res.status(400).json({message:err.message});
     }
-   
+}
+exports.getCommands=async (req,res)=>{
+    try{
+        const commands=await Command.find().populate('user','-_id -__v')
+        .populate('plants','name price _id').select('-__v -_id');
+        res.status(200).json(commands);
+    }catch(err){
+        res.status(400).json({message:err.message});
+    }
 }

@@ -13,7 +13,7 @@ const commandSchema=new mongoose.Schema({
     ],
     quantities:[
         {
-            id:String,
+            idPlant:String,
             quantity:Number
         }
     ],

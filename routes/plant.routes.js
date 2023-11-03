@@ -20,6 +20,7 @@ module.exports= app =>{
 
     // command routes
     router.post("/commands",commands.createCommand);
+    router.get("/commands",commands.getCommands)
 
 
     app.use("/api",router);
