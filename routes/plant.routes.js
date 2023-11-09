@@ -17,6 +17,7 @@ module.exports= app =>{
 
     // user routes
     router.post("/users",users.createUser);
+    router.post("/user",users.getUser);
 
     // command routes
     router.post("/commands",commands.createCommand);
