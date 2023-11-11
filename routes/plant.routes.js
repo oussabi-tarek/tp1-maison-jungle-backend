@@ -1,28 +1,31 @@
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const plants = require('../controller/plant.controller.js');
+const {authJwt} = require("../middelware");
 
-module.exports= app =>{
-    const plants=require("../controller/plant.controller.js");
-    const users=require("../controller/user.controller.js");
-    const commands=require("../controller/command.controller.js");
-    // plant routes
-    var router = require("express").Router();
-    router.get("/plants",plants.getPlants);
-    router.get("/plants/:id",plants.getPlant);
-    router.post("/plants",upload.single('cover'),plants.createPlant);
+module.exports = function(app) {
+  app.use(function(req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token,Origin,Content-Type,Accept"
+    );
+    next();
+  });
+    app.get("/api/plants",[
+      authJwt.verifyToken
+    ],plants.getPlants);
+    app.get("/api/plants/:id",
+    [
+     authJwt.verifyToken
+    ],plants.getPlant);
+    app.post("/api/plants",[
+        authJwt.verifyToken,
+        authJwt.isAdmin,
+    ],upload.single('cover'),plants.createPlant);
     // router.put("/:id",upload.single('cover'),plants.update);
     // router.delete("/:id",plants.delete);
     // router.delete("/",plants.deleteAll);
 
-    // user routes
-    router.post("/users",users.createUser);
-    router.post("/user",users.getUser);
 
-    // command routes
-    router.post("/commands",commands.createCommand);
-    router.get("/commands",commands.getCommands)
-
-
-    app.use("/api",router);
 }

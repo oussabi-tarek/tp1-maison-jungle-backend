@@ -23,7 +23,7 @@ exports.createPlant =async function (req, res) {
 exports.getPlants = async function (req, res) {
       try {
          const plants = await Plant.find().populate('category','-_id').select('-__v');
-         res.json(plants)
+         res.status(200).json(plants);
       } catch (err) {
          res.status(500).json({ message: err.message })
       }
